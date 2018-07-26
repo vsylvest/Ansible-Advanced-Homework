@@ -1,0 +1,5 @@
+- name: remove OSP keypair
+  os_keypair:
+    cloud: ospcloud
+    state: present
+    name: ansible_ssh

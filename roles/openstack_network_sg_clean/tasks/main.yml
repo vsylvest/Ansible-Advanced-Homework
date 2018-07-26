@@ -1,0 +1,20 @@
+---
+- name: remove Security Group Apps
+  os_security_group:
+    cloud: ospcloud
+    state: absent
+    name: apps
+
+- name: remove Security Group Frontend
+  os_security_group:
+    cloud: ospcloud
+    state: absent
+    name: frontend
+
+      
+- name: remove Security Group DB
+  os_security_group:
+    cloud: ospcloud
+    state: absent
+    name: db
+

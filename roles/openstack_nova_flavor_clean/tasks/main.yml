@@ -1,0 +1,5 @@
+- name: delete flavor m2.small
+  os_nova_flavor:
+    cloud: ospcloud
+    state: absent
+    name: m2.small

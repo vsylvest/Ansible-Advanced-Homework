@@ -1,0 +1,44 @@
+---
+- hosts: jumpbox
+  roles:
+  - { name: openstack_network_create, tags: [net-create, all-create] }
+  - { name: openstack_nova_flavor_create, tags: [flavor-create, all-create] }
+  - { name: openstack_network_sg_create, tags: [net-sg-create, all-create] }
+  - { name: openstack_nova_keypair_create, tags: [keypair-create, all-create] }
+  - { name: openstack_nova_server_create, tags: [server-create, all-create] }
+  - { name: openstack_add_host, tags: [3tier,add-repo,haprox,postgres,tomcat,add-host,all-create] }
+
+- name: enable repos on all instances
+  hosts: QA
+  gather_facts: false
+  roles:
+  - { name: 3tier_repo, tags: [3tier,add-repo,all-create] }
+
+- name: Install HA on frontend
+  hosts: frontends
+  gather_facts: false
+  roles:
+  - { name: 3tier_haproxy, tags: [3tier,all-create] }
+
+- name: Install postgres on DB
+  hosts: appdbs
+  gather_facts: false
+  roles:
+  - { name: 3tier_postgres, tags: [3tier,postgres,all-create] }
+ 
+- name: Install tomcat on apps
+  hosts: apps
+  gather_facts: false
+  roles:
+  - { name: 3tier_tomcat, tags: [3tier,tomcat,all-create] }
+
+
+# Cleanup OSP
+- hosts: jumpbox
+  roles:
+  - { name: openstack_add_host, tags: [server-clean,all-clean] }
+  - { name: openstack_nova_server_clean, tags: [server-clean, all-clean] }
+  - { name: openstack_nova_keypair_clean, tags: [keypair-clean, all-clean] }
+  - { name: openstack_network_sg_clean, tags: [net-sg-clean, all-clean] }
+  - { name: openstack_nova_flavor_clean, tags: [flavor-clean, all-clean] }
+  - { name: openstack_network_clean, tags: [net-clean, all-clean] }

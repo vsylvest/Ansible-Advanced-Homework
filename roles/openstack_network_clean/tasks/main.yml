@@ -1,0 +1,41 @@
+
+  - name: remove router
+    os_router:
+      cloud: ospcloud
+      state: absent
+      name: router1
+      
+  - name: remove external subnet    
+    os_subnet:
+      cloud: ospcloud
+      state: absent
+      name: external_subnet
+      
+  - name: remove external network     
+    os_network:
+      cloud: ospcloud
+      state: absent
+      name: ext_network
+      
+  - name: gather port facts        
+    os_port_facts:
+    cloud: ospcloud
+    register: ports
+    
+  - name: print ports
+    debug:
+      var: ports
+      
+#  - name: remove internal subnet
+#    os_subnet:
+#      cloud: ospcloud
+#      state: absent
+#      name: internal_subnet
+      
+#  - name: remove internal network
+#    os_network:
+#      cloud: ospcloud
+#      state: absent
+#     name: int_network
+     
+
