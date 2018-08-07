@@ -1,5 +1,5 @@
 ---
-- hosts: jumpbox
+- hosts: all
   roles:
   - { name: openstack_network_create }
   - { name: openstack_nova_flavor_create }
