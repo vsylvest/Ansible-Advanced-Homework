@@ -11,14 +11,13 @@
   - name: check condition for /var/lib/pgsql/data
     shell: test "$(ls /var/lib/pgsql/data/)"
     register: filespresent
+    ignore_errors: yes
 
   - name: initialize postgres
     command: postgresql-setup initdb
-    when: "filespresent == 0"
 
   - name: check initialisation of postgres
     command: chkconfig postgresql on
-    when: "filespresent == 0"
     
   - name: start postgres service
     service:
