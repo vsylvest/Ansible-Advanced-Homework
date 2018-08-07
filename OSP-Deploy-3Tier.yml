@@ -27,3 +27,9 @@
   gather_facts: false
   roles:
   - { name: 3tier_tomcat }
+
+- name: Check website
+  hosts: all
+  gather_facts: false
+  roles:
+  - { name: 3tier_smoke }
