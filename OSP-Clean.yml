@@ -1,0 +1,9 @@
+---
+- hosts: jumpbox
+  roles:
+  - { name: openstack_add_host }
+  - { name: openstack_nova_server_clean }
+  - { name: openstack_nova_keypair_clean }
+  - { name: openstack_network_sg_clean }
+  - { name: openstack_nova_flavor_clean }
+  - { name: openstack_network_clean }
