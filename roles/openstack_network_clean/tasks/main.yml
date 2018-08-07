@@ -5,32 +5,15 @@
       state: absent
       name: router1
 
-  - name: remove floating ips
-    command: for i in `openstack port list | grep 10.10 | awk -F"|" '{print $2}'` ; do openstack port delete $i ; done
-    
-  - name: remove ports
-    command: for i in `openstack floating ip list | grep 10.10 | awk -F"|" '{print $2}'` ; do openstack floating ip delete $i ; done    
-      
-  - name: remove external subnet    
-    os_subnet:
-      cloud: ospcloud
-      state: absent
-      name: external_subnet
-      
-  - name: remove external network     
-    os_network:
-      cloud: ospcloud
-      state: absent
-      name: ext_network
-      
-  - name: gather port facts        
-    os_port_facts:
-    cloud: ospcloud
-    register: ports
-    
-  - name: print ports
-    debug:
-      var: ports
+
+  - name: copy script to clean ports
+    template:
+      src: clean-ports.j2
+      dest: /root/clean-ports.sh
+      mode: 0755   
+
+  - name: clean ports and networks
+    shell: /root/clean-ports.sh
       
 #  - name: remove internal subnet
 #    os_subnet:

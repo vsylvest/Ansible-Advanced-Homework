@@ -1,0 +1,6 @@
+for i in `openstack floating ip list | grep 10.10 | awk -F"|" '{print $2}'` ; do openstack floating ip delete $i ; done
+for i in `openstack port list | grep 10.10 | awk -F"|" '{print $2}'` ; do openstack port delete $i ; done
+ansible localhost -m os_subnet -a "cloud=ospcloud state=absent name=external_subnet"
+ansible localhost -m os_subnet -a "cloud=ospcloud state=absent name=internal_subnet"
+ansible localhost -m os_network -a "cloud=ospcloud state=absent name=ext_network"
+ansible localhost -m os_network -a "cloud=ospcloud state=absent name=int_network"
