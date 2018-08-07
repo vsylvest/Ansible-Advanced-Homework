@@ -4,6 +4,12 @@
       cloud: ospcloud
       state: absent
       name: router1
+
+  - name: remove floating ips
+    command: for i in `openstack port list | grep 10.10 | awk -F"|" '{print $2}'` ; do openstack port delete $i ; done
+    
+  - name: remove ports
+    command: for i in `openstack floating ip list | grep 10.10 | awk -F"|" '{print $2}'` ; do openstack floating ip delete $i ; done    
       
   - name: remove external subnet    
     os_subnet:
