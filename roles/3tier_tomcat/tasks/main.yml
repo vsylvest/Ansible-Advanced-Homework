@@ -11,10 +11,6 @@
     file:
       path: /usr/share/tomcat/webapps/ansible
       state: directory
-      
-  - name: get hostname of the server
-    command: "cat /etc/hostname"
-    register: hostname
 
   - name: copy static index.html to tomcat webapps/ansible/index.html
     template:
